@@ -9,6 +9,7 @@ import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/ticket")
@@ -52,14 +53,14 @@ public class TokenController {
         }
         String authentication = accessToken;
         String authorizationHeader = "Bearer " + authentication;
-        String query = "SELECT CustomerCountry,MarketplaceLicenseType,MonthStartDate from ISVUsage";
+        String query = "SELECT%20CustomerCountry,MarketplaceLicenseType,MonthStartDate%20from%20ISVUsage";
         HttpResponse<String> error=null;
 
         HttpClient client = HttpClient.newHttpClient();
 
         // Create HTTP request object
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.partnercenter.microsoft.com/insights/v1/cmp/ScheduledQueries/testQueryResult?exportQuery" + query))
+                .uri(URI.create("https://api.partnercenter.microsoft.com/insights/v1/cmp/ScheduledQueries/testQueryResult?exportQuery="+ query))
                 .GET()
                 .header("Authorization", authorizationHeader)
                 .header("Content-Type", "application/json")
